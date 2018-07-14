@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Events } from 'ionic-angular';
 import { Note } from '../../model/note';
 
 /**
@@ -18,7 +19,7 @@ import { Note } from '../../model/note';
 export class AddNotePage {
   note: Note = new Note();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public events: Events) {
   }
 
   ionViewDidLoad() {
@@ -26,7 +27,8 @@ export class AddNotePage {
   }
 
   save() {
-    storage.set(note.title, note);
+    this.storage.set(this.note.title, this.note);
+    this.events.publish('note:created', this.note, Date.now());
     this.close();
   }
 

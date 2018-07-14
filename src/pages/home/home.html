@@ -18,4 +18,8 @@
     <button ion-fab mini (click)="goToAddNote()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
+  <ion-list>
+    <p ion-item *ngFor="let note of notes">{{note.title}}</p>   
+  </ion-list>
+
 </ion-content>

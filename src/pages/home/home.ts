@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { AddNotePage } from '../add-note/add-note'
+import { Events } from 'ionic-angular';
+import { AddNotePage } from '../add-note/add-note';
+import { Note } from '../../model/note';
 
 /**
  * Generated class for the HomePage page.
@@ -16,13 +18,21 @@ import { AddNotePage } from '../add-note/add-note'
   templateUrl: 'home.html',
 })
 export class HomePage {
-  notes: Note[] = {};
+  notes: Note[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public events: Events) {
+    this.listenNewNotes();
+    this.findNotes();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+  }
+
+  listenNewNotes() {
+    this.events.subscribe('note:created', (note, time) => {
+      this.notes.push(note);
+    });
   }
 
   goToAddNote() {
@@ -30,7 +40,12 @@ export class HomePage {
   }
 
   findNotes() {
-
+    this.storage.forEach( (value, key, index) => {
+      notes.push(value);
+      console.log("This is the value", value)
+      console.log("from the key", key)
+      console.log("Index is", index)
+    })
   }
 
 }
