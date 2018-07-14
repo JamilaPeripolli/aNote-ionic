@@ -14,12 +14,16 @@
 
 
 <ion-content padding>
-  <ion-fab top left edge>
+  <ion-fab top right edge>
     <button ion-fab mini (click)="goToAddNote()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-list>
-    <p ion-item *ngFor="let note of notes">{{note.title}}</p>   
+    <ion-item *ngFor="let note of notes">
+      <h2>{{note.title}}</h2>
+      <p>{{note.text}}</p>
+      <ion-icon name="warning" *ngIf="note.isImportant" item-end></ion-icon>
+    </ion-item>
   </ion-list>
 
 </ion-content>

@@ -31,7 +31,7 @@ export class HomePage {
 
   listenNewNotes() {
     this.events.subscribe('note:created', (note, time) => {
-      this.notes.push(note);
+      this.findNotes();
     });
   }
 
@@ -40,12 +40,26 @@ export class HomePage {
   }
 
   findNotes() {
-    this.storage.forEach( (value, key, index) => {
-      notes.push(value);
-      console.log("This is the value", value)
-      console.log("from the key", key)
-      console.log("Index is", index)
-    })
+    var importantNotes: Note[] = [];
+    var simpleNotes: Note[] = [];
+
+    this.storage.length().then(size =>{
+
+      this.storage.forEach( (value, key, index) => {
+        console.log("for")
+        if(value.isImportant) {
+          importantNotes.push(value);
+        } else {
+          simpleNotes.push(value);
+        }
+
+        if(index == size) {
+          console.log("fora")
+          this.notes = importantNotes.concat(simpleNotes);
+        }
+      });
+
+    });
   }
 
 }
