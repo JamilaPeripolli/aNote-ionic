@@ -19,7 +19,7 @@
   </ion-fab>
 
   <ion-list>
-    <ion-item *ngFor="let note of notes">
+    <ion-item *ngFor="let note of notes" (click)="openNote(note)">
       <h2>{{note.title}}</h2>
       <p>{{note.text}}</p>
       <ion-icon name="warning" *ngIf="note.isImportant" item-end></ion-icon>

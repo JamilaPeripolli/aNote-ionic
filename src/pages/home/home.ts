@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Events } from 'ionic-angular';
 import { AddNotePage } from '../add-note/add-note';
 import { Note } from '../../model/note';
+import { NotePage } from '../note/note';
 
 /**
  * Generated class for the HomePage page.
@@ -20,8 +20,8 @@ import { Note } from '../../model/note';
 export class HomePage {
   notes: Note[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public events: Events) {
-    this.listenNewNotes();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public events: Events, public modalCtrl: ModalController) {
+    this.listenToEvents();
     this.findNotes();
   }
 
@@ -29,8 +29,11 @@ export class HomePage {
     console.log('ionViewDidLoad HomePage');
   }
 
-  listenNewNotes() {
+  listenToEvents() {
     this.events.subscribe('note:created', (note, time) => {
+      this.findNotes();
+    });
+    this.events.subscribe('note:deleted', (note, time) => {
       this.findNotes();
     });
   }
@@ -46,7 +49,6 @@ export class HomePage {
     this.storage.length().then(size =>{
 
       this.storage.forEach( (value, key, index) => {
-        console.log("for")
         if(value.isImportant) {
           importantNotes.push(value);
         } else {
@@ -54,12 +56,16 @@ export class HomePage {
         }
 
         if(index == size) {
-          console.log("fora")
           this.notes = importantNotes.concat(simpleNotes);
         }
       });
 
     });
+  }
+
+  openNote(note) {
+    let noteModal = this.modalCtrl.create(NotePage, {note : note});
+    noteModal.present();
   }
 
 }

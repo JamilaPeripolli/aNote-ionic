@@ -7,13 +7,15 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { AddNotePage } from '../pages/add-note/add-note'
+import { AddNotePage } from '../pages/add-note/add-note';
+import { NotePage } from '../pages/note/note';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    AddNotePage
+    AddNotePage,
+    NotePage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { AddNotePage } from '../pages/add-note/add-note'
   entryComponents: [
     MyApp,
     HomePage,
-    AddNotePage
+    AddNotePage,
+    NotePage
   ],
   providers: [
     StatusBar,
