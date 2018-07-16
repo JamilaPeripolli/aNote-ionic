@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Note } from '../../model/note';
 
-/**
- * Generated class for the NotePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-note',
